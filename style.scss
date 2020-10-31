@@ -163,6 +163,23 @@ img {
   clear: both;
 }
 
+thead {
+  background: $lightGray;
+}
+
+th, td {
+  padding: 1em;
+  text-align: left;
+}
+
+tbody > tr {
+  border-bottom: 1px solid $lightGray;
+}
+
+th {
+  font-weight: bold;
+}
+
 /*********************/
 /* LAYOUT / SECTIONS */
 /*********************/
