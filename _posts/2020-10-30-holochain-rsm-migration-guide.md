@@ -53,7 +53,7 @@ Finally, the HDK is no longer necessary. It's still strongly recommended, becaus
 
 | Holochain Redux | Holochain RSM | Comment |
 | --- | --- | --- |
-| Update and delete operate on an entry hash. | Update and delete operate on a header hash. | This is a big shift in focus from data to state changes, and disambiguates between the same data written at different times by different people. |
+| Update and delete operate on an entry hash. | Update and delete operate on a header hash. | This is a big shift in focus from data to state changes, with a lot of benefits: it disambiguates between the same data written at different time by different people, allows previously deleted entries to be re-created, and avoids the confusion caused by update loops. |
 | An entry can be only updated or deleted once, and that status change is canonical; conflicting changes can't be resolved and result in an inconsistent DHT. | An entry can be updated or deleted multiple times for diverging realities, a la Git. | In the future, updates will get a 'redirect' flag and a conflict resolution callback to emulate canonical updates. |
 | Update, delete, and get follow the update chain to the latest version of the specified entry before performing actions. | Update, delete, and get operate directly on the specified element. | This prevents redirect loops and lets you implement your own selection logic. Future update + redirect functionality will emulate the old behaviour. In the future, canonical redirects may back-propagate to earlier versions of an entry to optimise DHT lookups. |
 | If you delete an entry, that entry is dead forever (tombstone set). | An entry is still alive until all headers are deleted (reference counting). | |
@@ -61,6 +61,7 @@ Finally, the HDK is no longer necessary. It's still strongly recommended, becaus
 | Only app entries can be updated and deleted. | App entries, agent public keys, and capability grants/claims (or rather, their elements) can be updated and deleted. | |
 | Deleted data stays on the DHT. | In the future you may be able to scrub some data from the DHT: 'withdraw' will ask validation authorities to remove an element that you mistakenly committed, and 'purge' will ask validation authorities to erase unsafe/illegal content created by others. | Data scrubbing will still depend on good faith; malicious validation authorities will be able to ignore these operations and keep the data. |
 | Anyone can write the same entry multiple times. | In the future, we'll introduce simple 'CRDT' types for entries that should only have one author. | This is good for scarce/rivalrous resources, such as usernames. |
+| Link creates and deletes operate on an entry. | Link creates operate on an etry, whereas link deletes operate on a link create element. | This means that prevously deleted links can now be recreated. |
 
 ## Development
 
