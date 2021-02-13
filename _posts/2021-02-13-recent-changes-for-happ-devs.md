@@ -77,10 +77,10 @@ Before, if I wanted to return a string error, I had to return all these nested s
 return Err(HdkError::Wasm(WasmError::Zome("Error Message".into())));
 ```
 
-Now, `HdkError` no longer exists: now you can simply return a `WasmError`:
+Now, `HdkError` no longer exists: now you can simply return a `WasmError::Guest`:
 
 ```rust
-return Err(WasmError::Zome("Error Message".into()));
+return Err(WasmError::Guest("Error Message".into()));
 ```
 
 ## `entry_def_index!` makes `query` easier
