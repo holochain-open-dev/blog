@@ -74,13 +74,13 @@ pub fn search_profiles(
 Before, if I wanted to return a string error, I had to return all these nested structs:
 
 ```rust
-    return Err(HdkError::Wasm(WasmError::Zome("Error Message".into())));
+return Err(HdkError::Wasm(WasmError::Zome("Error Message".into())));
 ```
 
 Now, `HdkError` no longer exists: now you can simply return a `WasmError`:
 
 ```rust
-    return Err(WasmError::Zome("Error Message".into()));
+return Err(WasmError::Zome("Error Message".into()));
 ```
 
 ## `entry_def_index!` makes `query` easier
@@ -126,6 +126,13 @@ fn query_and_convert_entries<T: EntryDefRegistration>() -> ExternResult<Vec<T>> 
     Ok(query_result.0)
 }
 ```
+
+## Better support for timestamps
+
+Timestamps have been improved by a big margin: they are now easily convertible to and from `chronos` types, and also you can do easy math on them.
+
+To see all changes and new goodies, check [here](https://github.com/holochain/holochain/pull/617/files#diff-0c3ccc5c3c05b5346a3ddd204bbf5251e48dd9700152c47ee70548f65879aec3L11).
+
 ## `sign_raw` and `verify_signature_raw`
 
 The recently introduced `sign` and `verify_signature` have been joined by `sign_raw` and `verify_signature_raw`:
@@ -153,3 +160,18 @@ Example use with the `package.json` of tryorama:
   },
 ```
 
+With this, we now also get different levels of debugging output enabled in our zomes: 
+
+```rust
+#[hdk_extern]
+fn debug(_: ()) -> ExternResult<()> {
+    trace!("tracing {}", "works!");
+    debug!("debug works");
+    info!("info works");
+    warn!("warn works");
+    error!("error works");
+    debug!(foo = "fields", bar = "work", "too");
+
+    Ok(())
+}
+```
