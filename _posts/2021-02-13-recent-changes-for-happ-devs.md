@@ -7,15 +7,9 @@ author: Guillem Córdoba
 
 Here are some recent changes that will improve hApp development. Even though they may create some friction at first if you have to change already existing code, they are all steps in the right direction in the long run.
 
-# nix-shell
-
-
-
 # HDK
 
 In the recent weeks, there have been a lot of breaking changes happening in the HDK. This is mainly an effort on the part of the holochain development team to introduce as many features and change possible before the release cycle for the HDK and holochain itself is stablished, and with it we arrive to a stabilization of the HDK API.
-
-Here, we'll be detailing the main breaking changes that will affect you if you have some rsm zome code that needs updating to the latest version.
 
 ## Serialization
 
