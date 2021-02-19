@@ -9,7 +9,31 @@ Here are some recent changes that will improve hApp development. Even though the
 
 # HDK
 
-In the recent weeks, there have been a lot of breaking changes happening in the HDK. This is mainly an effort on the part of the holochain development team to introduce as many features and change possible before the release cycle for the HDK and holochain itself is stablished, and with it we arrive to a stabilization of the HDK API.
+In the recent weeks, there have been a lot of breaking changes happening in the HDK. This is mainly an effort on the part of the holochain development team to introduce as many  features and change possible before the release cycle for the HDK and holochain itself is stablished, and with it we arrive to a stabilization of the HDK API.
+
+## `hdk3` is now `hdk`
+
+The crate `hdk3` is now renamed as `hdk`. This means that ALL ZOMES WRITTEN BEFORE THIS CHANGE WILL BREAK, but fortunately the changes are really easy to do with a find and replace all:
+
+Before:
+
+```toml
+hdk3 = {git = "https://github.com/holochain/holochain.git", rev = "5f1d6f4", package = "hdk3"}
+```
+
+```rust
+use hdk3::prelude::*;
+```
+
+After: 
+
+```toml
+hdk = {git = "https://github.com/holochain/holochain.git", rev = "5f1d6f4", package = "hdk"}
+```
+
+```rust
+use hdk::prelude::*;
+```
 
 ## Serialization
 
@@ -24,6 +48,14 @@ You can now freely use `Vec`s, `Option`s, `String`s as input or output types for
 - **Better output on serialization errors**
 
 We now get useful messages whenever a serialization error occurs instead of the usual `Unknown error`.
+
+- **`ElementVec` has been removed**
+
+You can simply replace the `ElementVec` with `Vec<Element>`:
+
+```rust
+let query_result: Vec<Element> = query(header_filter)?;
+```
 
 ### Example
 
